@@ -1,0 +1,196 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+}
+
+/* enum Role {
+  USER
+  ADMIN
+}
+
+
+model Users {
+  id Int @id @default(autoincrement())
+  firstname String
+  lastname String
+  email String @unique
+  password String
+  role Role
+  isActive Boolean
+  createdAt DateTime
+
+
+  @@map("users")
+}
+
+
+model CartLines {
+  id  Int  @id @default(autoincrement())
+  userId  Int
+  posterId  Int
+  quantity  Int
+  createdAt DateTime
+
+
+  // users Users @relation(fields: [userId], references: [id])
+  // poster Posters @relation(fields: [posterId], references: [id])
+
+  // user Users[]
+  // posters Posters[]
+
+  @@map("cartlines")
+}
+
+
+model UserRatings {
+  id  Int  @id @default(autoincrement())
+  userId Int
+  posterId Int
+  numStars  Int
+  createdAt Int
+
+  // users Users @relation(fields: [userId], references: [id])
+  // posters Posters @relation(fields: [posterId], references: [id])
+
+  // users Users[]
+  // poster Posters[]
+
+  @@map("userratings")
+}
+
+
+model Posters {
+  id  Int  @id @default(autoincrement())
+  name String
+  slug String
+  description String
+  image String
+  width Int
+  height  Int
+  price Float
+  stock Int
+  createdAt DateTime
+  updatedAt DateTime
+
+
+
+  @@map("posters")
+}
+
+
+model Genres {
+  id  Int  @id @default(autoincrement())
+  title String
+  slug String
+  createdAt DateTime
+  updatedAt DateTime
+
+  @@map("genres")
+}
+
+
+model genrePosterRel {
+  id  Int  @id @default(autoincrement())
+  genreId Int
+  posterId Int
+} */
+
+
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Users {
+  id        Int         @id @default(autoincrement())
+  firstname String
+  lastname  String
+  email     String       @unique
+  password  String
+  role      Role
+  isActive  Boolean
+  createdAt DateTime @default(now())
+
+
+  cartLines   CartLines[]
+  ratings     UserRatings[]
+
+  @@map("users")
+}
+
+model CartLines {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  posterId  Int
+  quantity  Int
+  createdAt DateTime  @default(now())
+
+
+  user   Users   @relation(fields: [userId], references: [id])
+  poster Posters @relation(fields: [posterId], references: [id])
+
+  @@map("cartlines")
+}
+
+model UserRatings {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  posterId  Int
+  numStars  Int
+  createdAt DateTime  @default(now())
+
+  
+  user   Users   @relation(fields: [userId], references: [id])
+  poster Posters @relation(fields: [posterId], references: [id])
+
+  @@map("userratings")
+}
+
+model Posters {
+  id          Int          @id @default(autoincrement())
+  name        String
+  slug        String
+  description String
+  image       String
+  width       Int
+  height      Int
+  price       Float
+  stock       Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+
+
+  cartLines   CartLines[]
+  ratings     UserRatings[]
+  genres      genrePosterRel[]
+
+  @@map("posters")
+}
+
+model Genres {
+  id        Int    @id @default(autoincrement())
+  title     String
+  slug      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+
+  posters genrePosterRel[]
+
+  @@map("genres")
+}
+
+model genrePosterRel {
+  id       Int @id @default(autoincrement())
+  genreId  Int
+  posterId Int
+
+  genre  Genres  @relation(fields: [genreId], references: [id])
+  poster Posters @relation(fields: [posterId], references: [id])
+
+  @@map("genreposterrel")
+}
