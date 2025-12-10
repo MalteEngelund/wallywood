@@ -11,6 +11,21 @@ export const fieldTypes: Record<string, Record<string, 'string' | 'number' | 'bo
   },
   // Her kommer næste model
   
+  posters: {
+    id: 'number',
+    name: 'string',
+    slug: 'string',
+    description: 'string',
+    image: 'string',
+    width: 'number',
+    height: 'number',
+    price: 'number',
+    stock: 'number',
+    createdAt: 'date',
+    updatedAt: 'date',
+    
+  },
+
   cartlines: {
     id: 'number',
     userId: 'number',
@@ -27,20 +42,7 @@ export const fieldTypes: Record<string, Record<string, 'string' | 'number' | 'bo
     createdAt: 'date'
   },
 
-  posters: {
-    id: 'number',
-    name: 'string',
-    slug: 'string',
-    description: 'string',
-    image: 'string',
-    width: 'number',
-    height: 'number',
-    price: 'number',
-    stock: 'number',
-    createdAt: 'date',
-    updatedAt: 'date',
-    
-  },
+  
 
   genres: {
     id: 'number',

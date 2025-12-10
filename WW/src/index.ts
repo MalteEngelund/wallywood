@@ -4,6 +4,10 @@ import { userRoutes } from './routes/userRoutes.js';
 import { posterRoutes } from './routes/posterRoutes.js';
 import { cartlineRoutes } from './routes/cartlineRoutes.js';
 import { userRatingRoutes } from './routes/userRatingRoutes.js';
+import { genreRoutes } from './routes/genreRoutes.js';
+import { genrePosterRelRoutes } from './routes/genrePosterRelRoutes.js';
+import { authRoutes } from './routes/authRoutes.js';
+import { loginRoutes } from './routes/loginRoutes.js';
 
 // Indlæs miljøvariabler fra .env (uden at vise logs)
 dotenv.config({ quiet: true });
@@ -27,6 +31,14 @@ app.use('/api/posters', posterRoutes)
 
 app.use('/api/cartlines', cartlineRoutes)
 app.use('/api/userratings', userRatingRoutes)
+app.use('/api/genres', genreRoutes)
+app.use('/api/genrePosterRels', genrePosterRelRoutes)
+
+// login
+app.use('/api/login', loginRoutes)
+
+// auth routes
+app.use('/api/auth', authRoutes)
 
 
 

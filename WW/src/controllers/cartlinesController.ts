@@ -3,7 +3,12 @@ import { prisma } from '../prisma.js';
 
 export const getRecords = async (req: Request, res: Response) => {
   try {
-    const data = await prisma.cartLines.findMany();
+    const data = await prisma.cartLines.findMany({
+      include: {
+        user: true,
+        poster: true
+      }
+    });
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -23,6 +28,10 @@ export const getRecord = async (req: Request, res: Response) => {
       where: {
         id
       },
+      select: {
+        user: true,
+        poster: true
+      }
     });
     return res.status(200).json(data);
   } catch (error) {
@@ -34,9 +43,9 @@ export const getRecord = async (req: Request, res: Response) => {
 
 
 export const createRecord = async (req: Request, res: Response) => {
-  const { userId, posterId, quantity, createdAt } = req.body;
+  const { userId, posterId, quantity } = req.body;
 
-  if (!userId || !posterId || !quantity || createdAt) {
+  if (!userId || !posterId || !quantity) {
     return res.status(400).json({ error: 'Alle felter skal udfyldes' });
   }
 
@@ -44,10 +53,9 @@ export const createRecord = async (req: Request, res: Response) => {
 
     const data = await prisma.cartLines.create({
       data: {
-        userId,
-        posterId, 
-        quantity,
-        createdAt,
+        userId: Number(userId),
+        posterId: Number(posterId), 
+        quantity: Number(quantity)
       }
     });
 
@@ -62,13 +70,13 @@ export const createRecord = async (req: Request, res: Response) => {
 
 export const updateRecord = async (req: Request, res: Response) => {
   const id = Number(req.params.id) // Sikrer at id er et tal
-  const { userId, posterId, quantity, createdAt } = req.body // Deconstruerer form body objektet
+  const { userId, posterId, quantity } = req.body // Deconstruerer form body objektet
 
   if(!id) {
     return res.status(400).json({ error: 'Id skal have en gyldig værdi' });
   }
 
-  if(!userId || !posterId || !quantity || createdAt) {
+  if(!userId || !posterId || !quantity) {
     return res.status(400).json({ error: 'Alle felter skal udfyldes' });
   }
 
@@ -76,10 +84,9 @@ export const updateRecord = async (req: Request, res: Response) => {
     const data = await prisma.cartLines.update({
       where: { id },
       data: {
-        userId,
-        posterId, 
-        quantity,
-        createdAt,
+        userId: Number(userId),
+        posterId: Number(posterId), 
+        quantity: Number(quantity)
       }
     })
 

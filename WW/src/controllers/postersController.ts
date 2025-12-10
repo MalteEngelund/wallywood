@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../prisma.js';
 
+
 export const getRecords = async (req: Request, res: Response) => {
   try {
     const data = await prisma.posters.findMany();
@@ -34,9 +35,10 @@ export const getRecord = async (req: Request, res: Response) => {
 
 
 export const createRecord = async (req: Request, res: Response) => {
-  const { name, slug, description, image, width, height, price, stock, createdAt, updatedAt } = req.body;
-
-  if (!name || !slug || !description || !image || !width || !height || !price || !stock || !createdAt || !updatedAt) {
+  const { name, slug, description, image, width, height, price, stock, } = req.body;
+  console.log(req.body);
+  if (!name || !slug || !description || !image || !width || !height || !price || !stock) {
+    
     return res.status(400).json({ error: 'Alle felter skal udfyldes' });
   }
 
@@ -48,12 +50,10 @@ export const createRecord = async (req: Request, res: Response) => {
         slug,
         description,
         image,
-        width,
-        height,
-        price,
-        stock,
-        createdAt,
-        updatedAt,
+        width: Number(width),
+        height: Number(height),
+        price: Number(price),
+        stock: Number(stock),
       }
     });
 
@@ -68,13 +68,13 @@ export const createRecord = async (req: Request, res: Response) => {
 
 export const updateRecord = async (req: Request, res: Response) => {
   const id = Number(req.params.id) // Sikrer at id er et tal
-  const { name, slug, description, image, width, height, price, stock, createdAt, updatedAt } = req.body // Deconstruerer form body objektet
+  const { name, slug, description, image, width, height, price, stock} = req.body // Deconstruerer form body objektet
 
   if(!id) {
     return res.status(400).json({ error: 'Id skal have en gyldig værdi' });
   }
 
-  if(!name || !slug || !description || !image || !width || !height || !price || !stock || !createdAt || !updatedAt) {
+  if(!name || !slug || !description || !image || !width || !height || !price || !stock) {
     return res.status(400).json({ error: 'Alle felter skal udfyldes' });
   }
 
@@ -86,12 +86,10 @@ export const updateRecord = async (req: Request, res: Response) => {
         slug,
         description,
         image,
-        width,
-        height,
-        price,
-        stock,
-        createdAt,
-        updatedAt,
+        width: Number(width),
+        height: Number(height),
+        price: Number(price),
+        stock: Number(stock)
       }
     })
 

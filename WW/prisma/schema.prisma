@@ -107,16 +107,16 @@ enum Role {
 }
 
 model Users {
-  id        Int         @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   firstname String
   lastname  String
-  email     String       @unique
+  email     String        @unique
   password  String
   role      Role
   isActive  Boolean
-  createdAt DateTime @default(now())
+  createdAt DateTime      @default(now())
 
-
+  // relations
   cartLines   CartLines[]
   ratings     UserRatings[]
 
@@ -128,9 +128,9 @@ model CartLines {
   userId    Int
   posterId  Int
   quantity  Int
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
-
+  // relations
   user   Users   @relation(fields: [userId], references: [id])
   poster Posters @relation(fields: [posterId], references: [id])
 
@@ -142,9 +142,9 @@ model UserRatings {
   userId    Int
   posterId  Int
   numStars  Int
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
-  
+  // relations
   user   Users   @relation(fields: [userId], references: [id])
   poster Posters @relation(fields: [posterId], references: [id])
 
@@ -152,7 +152,7 @@ model UserRatings {
 }
 
 model Posters {
-  id          Int          @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   slug        String
   description String
@@ -161,24 +161,25 @@ model Posters {
   height      Int
   price       Float
   stock       Int
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 
-
-  cartLines   CartLines[]
-  ratings     UserRatings[]
-  genres      genrePosterRel[]
+  // relations
+  cartLines CartLines[]
+  ratings   UserRatings[]
+  genres    genrePosterRel[]
 
   @@map("posters")
 }
 
 model Genres {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   slug      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
+  // relations
   posters genrePosterRel[]
 
   @@map("genres")
@@ -189,6 +190,7 @@ model genrePosterRel {
   genreId  Int
   posterId Int
 
+  // relations
   genre  Genres  @relation(fields: [genreId], references: [id])
   poster Posters @relation(fields: [posterId], references: [id])
 
