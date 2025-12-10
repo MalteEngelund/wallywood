@@ -1,5 +1,5 @@
 export const fieldTypes: Record<string, Record<string, 'string' | 'number' | 'boolean' | 'date'>> = {
-  user: {
+  users: {
     id: 'number',
     firstname: 'string',
     lastname: 'string',
@@ -26,7 +26,7 @@ export const fieldTypes: Record<string, Record<string, 'string' | 'number' | 'bo
     
   },
 
-  cartlines: {
+  cartLines: {
     id: 'number',
     userId: 'number',
     posterId: 'number',
@@ -34,7 +34,7 @@ export const fieldTypes: Record<string, Record<string, 'string' | 'number' | 'bo
     createdAt: 'date'
   },
 
-  userratings: {
+  userRatings: {
     id: 'number',
     userId: 'number',
     posterId: 'number',
@@ -52,7 +52,7 @@ export const fieldTypes: Record<string, Record<string, 'string' | 'number' | 'bo
     updatedAt: 'date',
   },
 
-  genreposterrel: {
+  genrePosterRel: {
     genreId: 'number',
     posterId: 'number',
   }

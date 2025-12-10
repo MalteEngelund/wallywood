@@ -117,38 +117,10 @@ model Users {
   createdAt DateTime      @default(now())
 
   // relations
-  cartLines   CartLines[]
-  ratings     UserRatings[]
+  cartLines   CartLines[] @relation("UserCartLines")
+  ratings     UserRatings[] @relation("UserRatings")
 
   @@map("users")
-}
-
-model CartLines {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  posterId  Int
-  quantity  Int
-  createdAt DateTime @default(now())
-
-  // relations
-  user   Users   @relation(fields: [userId], references: [id])
-  poster Posters @relation(fields: [posterId], references: [id])
-
-  @@map("cartlines")
-}
-
-model UserRatings {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  posterId  Int
-  numStars  Int
-  createdAt DateTime @default(now())
-
-  // relations
-  user   Users   @relation(fields: [userId], references: [id])
-  poster Posters @relation(fields: [posterId], references: [id])
-
-  @@map("userratings")
 }
 
 model Posters {
@@ -165,12 +137,42 @@ model Posters {
   updatedAt   DateTime @default(now())
 
   // relations
-  cartLines CartLines[]
-  ratings   UserRatings[]
-  genres    genrePosterRel[]
+  cartLines CartLines[] @relation("PosterCartLines")
+  ratings   UserRatings[] @relation("PosterRatings")
+  genres    genrePosterRel[]  @relation("PosterToGenrePosterRel")
 
   @@map("posters")
 }
+
+model CartLines {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  posterId  Int
+  quantity  Int
+  createdAt DateTime @default(now())
+
+  // relations
+  user   Users   @relation("UserCartLines", fields: [userId], references: [id])
+  poster Posters @relation("PosterCartLines", fields: [posterId], references: [id])
+
+  @@map("cartlines")
+}
+
+model UserRatings {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  posterId  Int
+  numStars  Int
+  createdAt DateTime @default(now())
+
+  // relations
+  user   Users   @relation("UserRatings", fields: [userId], references: [id])
+  poster Posters @relation("PosterRatings", fields: [posterId], references: [id])
+
+  @@map("userratings")
+}
+
+
 
 model Genres {
   id        Int      @id @default(autoincrement())
@@ -180,7 +182,7 @@ model Genres {
   updatedAt DateTime @default(now())
 
   // relations
-  posters genrePosterRel[]
+  posters genrePosterRel[] @relation("GenreToGenrePosterRel")
 
   @@map("genres")
 }
@@ -191,8 +193,8 @@ model genrePosterRel {
   posterId Int
 
   // relations
-  genre  Genres  @relation(fields: [genreId], references: [id])
-  poster Posters @relation(fields: [posterId], references: [id])
+  genre  Genres  @relation("GenreToGenrePosterRel", fields: [genreId], references: [id])
+  poster Posters @relation("PosterToGenrePosterRel", fields: [posterId], references: [id])
 
   @@map("genreposterrel")
 }

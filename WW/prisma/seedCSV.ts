@@ -26,6 +26,8 @@ const data = await Promise.all(raw.map((row: any) => cast(model, row)));
 await (prisma as any)[model].createMany({ data, skipDuplicates: true });
 }
 }
+console.log(Object.keys(prisma));
+
 
 async function cast(model: string, row: any) {
   const types = fieldTypes[model];
