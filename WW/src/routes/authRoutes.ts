@@ -9,6 +9,6 @@ const router = Router();
 // Hvis token er OK, kører getUserProfile og returnerer brugerens data
 router.get('/authenticate', authenticateToken, getUserProfile);
 
-router.get('/authorize', authenticateToken, authorizeRole('ADMIN'), getUserProfile);  // , 'USER' <- kan tilføjes efter ('ADMIN')
+router.get('/authorize', authenticateToken, authorizeRole('ADMIN'), getUserProfile);
 
 export { router as authRoutes };

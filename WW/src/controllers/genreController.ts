@@ -3,58 +3,72 @@ import { prisma } from '../prisma.js';
 
 export const getRecords = async (req: Request, res: Response) => {
   try {
-    const data = await prisma.genrePosterRel.findMany({
-      include: {
-        genre: true,
-        poster: true
-      }
-    });
+    const data = await prisma.genres.findMany();
     res.json(data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to fetch genrePosterRel' });
+    res.status(500).json({ error: 'Failed to fetch genres' });
   }
 };
 
 export const getRecord = async (req: Request, res: Response) => {
-  const id = Number(req.params.id)
+  // const id = Number(req.params.id)
+  const slug = req.params.slug
 
-  if (!id) {
+  if (!slug) {
     return res.status(400).json({ error: 'Id has no value' });
   }
 
   try {
-    const data = await prisma.genrePosterRel.findUnique({
+    const data = await prisma.genres.findFirst({
       where: {
-        id
+        slug
       },
       select: {
-        genre: true,
-        poster: true
+        title: true,
+        slug: true,
+        posters: {
+          select: {
+            poster: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                image: true
+              }
+            }
+          }
+        }
       }
     });
-    return res.status(200).json(data);
+
+    const result = {
+       ...data,
+       posters: data?.posters.map(rel => rel.poster)
+    }
+    
+    return res.status(200).json(result); // smid result på her i stedet for data senere
   } catch (error) {
     console.error(error); // Failed request log
-    res.status(500).json({ error: 'Failed to fetch genrePosterRel' });
+    res.status(500).json({ error: 'Failed to fetch genre' });
   }
 };
 
 
 
 export const createRecord = async (req: Request, res: Response) => {
-  const { genreId, posterId } = req.body;
-  console.log(req.body)
-  if (!genreId || !posterId) {
+  const { title, slug } = req.body;
+
+  if (!title || !slug ) {
     return res.status(400).json({ error: 'Alle felter skal udfyldes' });
   }
 
   try {
 
-    const data = await prisma.genrePosterRel.create({
+    const data = await prisma.genres.create({
       data: {
-        genreId: Number(genreId),
-        posterId: Number(posterId)
+        title,
+        slug
       }
     });
 
@@ -69,22 +83,22 @@ export const createRecord = async (req: Request, res: Response) => {
 
 export const updateRecord = async (req: Request, res: Response) => {
   const id = Number(req.params.id) // Sikrer at id er et tal
-  const { genreId, posterId } = req.body // Deconstruerer form body objektet
+  const { title, slug } = req.body // Deconstruerer form body objektet
 
   if(!id) {
     return res.status(400).json({ error: 'Id skal have en gyldig værdi' });
   }
 
-  if(!genreId || !posterId) {
+  if(!title || !slug) {
     return res.status(400).json({ error: 'Alle felter skal udfyldes' });
   }
 
   try {
-    const data = await prisma.genrePosterRel.update({
+    const data = await prisma.genres.update({
       where: { id },
       data: {
-        genreId: Number(genreId),
-        posterId: Number(posterId)
+        title,
+        slug,
       }
     })
 
@@ -100,13 +114,13 @@ export const deleteRecord = async (req: Request, res: Response) => {
   const id = Number(req.params.id)
 
   try {
-    await prisma.genrePosterRel.delete({
+    await prisma.genres.delete({
       where: { id },
     });
 
-    res.status(200).json({ message: `genrePosterRel nr. ${id} er slettet` });
+    res.status(200).json({ message: `Bruger nr. ${id} er slettet` });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Kunne ikke slette genrePosterRel' });
+    res.status(500).json({ error: 'Kunne ikke slette brugeren' });
   }
 };

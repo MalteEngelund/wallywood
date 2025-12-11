@@ -30,7 +30,8 @@ export const getRecord = async (req: Request, res: Response) => {
       },
       select: {
         user: true,
-        poster: true
+        poster: true,
+        quantity: true
       }
     });
     return res.status(200).json(data);

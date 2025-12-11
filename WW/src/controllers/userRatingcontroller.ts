@@ -35,6 +35,8 @@ export const getRecord = async (req: Request, res: Response) => {
 
 export const createRecord = async (req: Request, res: Response) => {
   const { userId, posterId, numStars } = req.body;
+  
+  
 
   if (!userId || !posterId || !numStars) {
     return res.status(400).json({ error: 'Alle felter skal udfyldes' });
@@ -45,7 +47,7 @@ export const createRecord = async (req: Request, res: Response) => {
     const data = await prisma.userRatings.create({
       data: {
         userId: Number(userId),
-        posterId: Number(posterId), 
+        posterId: Number(posterId),
         numStars: Number(numStars)
       }
     });
@@ -76,12 +78,13 @@ export const updateRecord = async (req: Request, res: Response) => {
       where: { id },
       data: {
         userId: Number(userId),
-        posterId: Number(posterId), 
+        posterId: Number(posterId),
         numStars: Number(numStars)
       }
     })
 
     return res.status(201).json(data);
+
 
   } catch (error) {
     console.log(error);

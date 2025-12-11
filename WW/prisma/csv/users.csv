@@ -2,3 +2,15 @@
 1,"Admin","Admin","info@webudvikler.dk","password","ADMIN",1
 2,"Testbruger","Test","alm@webudvikler.dk","password","USER",1
 3,"Malte","Engo","malte@test.dk","password","ADMIN",1
+4,"Anna","Hansen","anna.hansen@example.com","password","USER",1
+5,"Lars","Nielsen","lars.nielsen@example.com","password","USER",1
+6,"Sofie","Jensen","sofie.jensen@example.com","password","USER",1
+7,"Peter","Larsen","peter.larsen@example.com","password","USER",1
+8,"Camilla","Møller","camilla.moller@example.com","password","USER",1
+9,"Anders","Krogh","anders.krogh@example.com","password","USER",1
+10,"Ida","Olsen","ida.olsen@example.com","password","USER",1
+11,"Thomas","Mortensen","thomas.mortensen@example.com","password","USER",1
+12,"Karina","Berg","karina.berg@example.com","password","USER",1
+13,"Magnus","Friis","magnus.friis@example.com","password","USER",1
+14,"Nina","Svendsen","nina.svendsen@example.com","password","USER",0
+15,"Bjorn","Lykke","bjorn.lykke@example.com","password","USER",1
