@@ -6,6 +6,9 @@ https://universal-shadow-1757485.postman.co/workspace/Malte's-Workspace~9e7cb825
 
 
 jeg har fulgt guiden på nodejs moodle
+
+
+
 NodeJs + npm + express + prisma v6.19 + typescript
 
 
