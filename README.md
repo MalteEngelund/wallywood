@@ -23,6 +23,7 @@ bcrypt + jsonwebtoken + csv-parse
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3"
   },
+
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/csv-parse": "^1.1.12",
