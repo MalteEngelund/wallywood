@@ -10,6 +10,8 @@ NodeJs + npm + express + prisma v6.19 + typescript
 
 
 bcrypt + jsonwebtoken + csv-parse
+
+
 "dependencies": {
     "@prisma/client": "6.19",
     "bcrypt": "^6.0.0",
